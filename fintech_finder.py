@@ -30,6 +30,8 @@ from dataclasses import dataclass
 from typing import Any, List
 from web3 import Web3
 w3 = Web3(Web3.HTTPProvider('HTTP://127.0.0.1:7545'))
+from crypto_wallet import generate_account, get_balance, send_transaction
+
 ################################################################################
 # Step 1:
 # Import Ethereum Transaction Functions into the Fintech Finder Application
@@ -50,7 +52,8 @@ w3 = Web3(Web3.HTTPProvider('HTTP://127.0.0.1:7545'))
 # incorporated into Python functions that allow you to automate the process of
 # accessing them.
 
-# 2. Add your mnemonic seed phrase (provided by Ganache) to the starter code’s `SAMPLE.env` file.
+# 2. Add your mnemonic seed phrase (provided by Ganache) to the starter 
+# code’s `SAMPLE.env` file.
 # When the information has been added, rename the file `.env`.
 
 # 3. Import the following functions from the `crypto_wallet.py` file:
@@ -79,12 +82,13 @@ w3 = Web3(Web3.HTTPProvider('HTTP://127.0.0.1:7545'))
 # @TODO:
 # From `crypto_wallet.py import the functions generate_account, get_balance,
 #  and send_transaction
-from crypto_wallet.py import generate_account, get_balance, send_transaction
+# Completed, See above
 
 ################################################################################
 # Fintech Finder Candidate Information
 
-# Database of Fintech Finder candidates including their name, digital address, rating and hourly cost per Ether.
+# Database of Fintech Finder candidates including their name, digital address, 
+# rating and hourly cost per Ether.
 # A single Ether is currently valued at $1,500
 candidate_database = {
     "Lane": ["Lane", "0xaC8eB8B2ed5C4a0fC41a84Ee4950F417f67029F0", "4.3", .20, "Images/lane.jpeg"],
@@ -130,7 +134,7 @@ st.sidebar.markdown("## Client Account Address and Ethernet Balance in Ether")
 
 # @TODO:
 #  Call the `generate_account` function and save it as the variable `account`
-account = generate_account
+account = generate_account()
 
 ##########################################
 
@@ -237,7 +241,7 @@ st.sidebar.markdown("## Total Wage in Ether")
 # Calculate total `wage` for the candidate by multiplying the candidate’s hourly
 # rate from the candidate database (`candidate_database[person][3]`) by the
 # value of the `hours` variable
-# wage =  
+wage = hourly_rate * hours
 
 # @TODO
 # Write the `wage` calculation to the Streamlit sidebar
@@ -268,7 +272,7 @@ if st.sidebar.button("Send Transaction"):
     # Call the `send_transaction` function and pass it 3 parameters:
     # Your `account`, the `candidate_address`, and the `wage` as parameters
     # Save the returned transaction hash as a variable named `transaction_hash`
-    # YOUR CODE HERE
+    transaction_hash = send_transaction(account, candidate_address, wage)
 
     # Markdown for the transaction hash
     st.sidebar.markdown("#### Validated Transaction Hash")
